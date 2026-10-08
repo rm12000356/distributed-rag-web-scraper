@@ -1,0 +1,35 @@
+{
+  "name": "@rag/worker",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "lint": "tsc --noEmit",
+    "clean": "rimraf dist",
+    "type-check": "tsc --noEmit",
+    "test": "echo \"no tests configured\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@rag/database": "file:../../packages/database",
+    "@rag/queue": "file:../../packages/queue",
+    "@rag/rag": "file:../../packages/rag",
+    "@rag/scraper": "file:../../packages/scraper",
+    "@rag/shared": "file:../../packages/shared",
+    "@rag/vector": "file:../../packages/vector",
+    "amqplib": "^0.10.7",
+    "dotenv": "^17.4.2",
+    "openai": "^4.104.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/amqplib": "^0.10.7",
+    "@types/node": "^26.1.1",
+    "tsx": "^4.23.1",
+    "typescript": "^5.6.3"
+  }
+}

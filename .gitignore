@@ -1,0 +1,10 @@
+node_modules
+dist
+.turbo
+*.tsbuildinfo
+*.d.ts
+*.d.ts.map
+.turbo/**/*
+.env
+.env.local
+*.log

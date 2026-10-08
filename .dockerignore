@@ -1,0 +1,14 @@
+node_modules
+.turbo
+dist
+*.tsbuildinfo
+.env
+.env.local
+.git
+*.md
+*.test.*
+coverage
+.github
+Dockerfile
+docker-compose*.yml
+.vscode

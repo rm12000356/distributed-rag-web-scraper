@@ -1,0 +1,124 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum CrawlJobStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+enum WorkerStatus {
+  ACTIVE
+  IDLE
+  OFFLINE
+}
+
+enum PageStatus {
+  QUEUED
+  SCRAPED
+  PROCESSING
+  PROCESSED
+  FAILED
+}
+
+model Website {
+  id         String     @id @default(uuid())
+  url        String     @unique
+  renderMode String     @default("auto")
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  crawlJobs CrawlJob[]
+  pages     Page[]
+}
+
+model CrawlJob {
+  id        String         @id @default(uuid())
+  status    CrawlJobStatus @default(PENDING)
+  depth     Int            @default(1)
+  attempts  Int            @default(0)
+  lastError String?        @db.Text
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  websiteId String
+  website   Website @relation(fields: [websiteId], references: [id])
+
+  pages Page[]
+
+  @@index([websiteId])
+  @@index([status])
+}
+
+model Page {
+  id          String       @id @default(uuid())
+  url         String
+  title       String?
+  content     String?      @db.Text
+  contentHash String?
+  status      PageStatus   @default(QUEUED)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  websiteId  String
+  website    Website      @relation(fields: [websiteId], references: [id])
+  crawlJobId String?
+  crawlJob   CrawlJob?    @relation(fields: [crawlJobId], references: [id])
+  versions   PageVersion[]
+
+  @@unique([websiteId, url])
+  @@index([websiteId])
+  @@index([websiteId, contentHash])
+}
+
+model PageVersion {
+  id             String   @id @default(uuid())
+  pageId         String
+  page           Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  contentHash    String
+  plainText      String   @db.Text
+  normalizedJson String?  @db.Text
+  metadataJson   String?  @db.Text
+  versionNumber  Int
+  createdAt      DateTime @default(now())
+  chunks         Chunk[]
+
+  @@index([pageId])
+  @@index([pageId, versionNumber])
+  @@unique([pageId, contentHash])
+  @@unique([pageId, versionNumber])
+}
+
+model Chunk {
+  id             String   @id @default(uuid())
+  chunkId        String   @unique
+  pageVersionId  String
+  pageVersion    PageVersion @relation(fields: [pageVersionId], references: [id], onDelete: Cascade)
+  chunkIndex     Int
+  text           String   @db.Text
+  heading        String?
+  pageTitle      String
+  sectionTitle   String?
+  pageUrl        String
+  websiteId      String
+  qdrantPointId  String
+  createdAt      DateTime @default(now())
+
+  @@index([pageVersionId])
+  @@index([chunkId])
+}
+
+model Worker {
+  id            String       @id @default(uuid())
+  name          String       @unique
+  status        WorkerStatus @default(IDLE)
+  lastHeartbeat DateTime?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
