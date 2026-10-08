@@ -4,7 +4,7 @@ A production-style distributed web scraping framework with Retrieval-Augmented G
 
 ## Demo Video
 
-https://drive.google.com/file/d/1xfSelmzps7Dwj-LTeYcdHl72zdbTp43L/view?usp=sharing
+[▶ Watch the demo video](https://drive.google.com/file/d/1xfSelmzps7Dwj-LTeYcdHl72zdbTp43L/view?usp=sharing)
 
 ## Tech Stack
 
