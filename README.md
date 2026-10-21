@@ -10,18 +10,20 @@ Developed in a private repository during the Onramp program; history not carried
 
 ## Tech Stack
 
-| Category | Technology |
-| Runtime | Node.js 22, TypeScript 6 |
-| Backend | Express 5 |
-| Frontend | React 19, Vite 8 |
-| Database | PostgreSQL 16, Prisma 7 |
-| Queue | RabbitMQ |
-| Vector DB | Qdrant |
-| Scraping | Axios + Cheerio (static), Playwright (dynamic) |
-| Data Processing | Deep HTML cleaning, content normalization, metadata extraction, page versioning — Phase 5 |
-| LLM | OpenAI GPT (abstracted) |
-| Containers | Docker Compose |
-| Monorepo | npm workspaces + Turbo 2 |
+| Category | Technology | Role |
+|---|---|---|
+| Runtime | Node.js 22, TypeScript 6 | Language and runtime across the whole monorepo |
+| Backend | Express 5 | REST API (9 endpoints) |
+| Frontend | React 19, Vite 8 | Dashboard SPA (8 views) |
+| Database | PostgreSQL 16, Prisma 7 | Jobs, pages, versions, chunks, workers; typed queries and migrations |
+| Queue | RabbitMQ (amqplib) | Crawl job distribution, retry with backoff, dead letter queue |
+| Vector DB | Qdrant | Stores chunk embeddings for similarity search |
+| Scraping | Axios + Cheerio (static), Playwright (dynamic) | Fetching and parsing pages; Playwright reserved for dynamic pages |
+| Data processing | HTML cleaning, content normalization, metadata extraction, page versioning | Turns raw HTML into clean, deduplicated, versioned content (Phase 5) |
+| Embeddings | HuggingFace all-MiniLM-L6-v2 (local, 384-dim) | Chunk embeddings for retrieval |
+| LLM | OpenAI GPT (provider abstracted) | Answer generation for RAG Q&A |
+| Containers | Docker Compose | PostgreSQL, RabbitMQ, Qdrant, API and workers |
+| Monorepo | npm workspaces + Turbo 2 | Task caching and parallel builds |
 
 ## Project Structure
 
