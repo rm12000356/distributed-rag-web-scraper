@@ -2,6 +2,8 @@
 
 A production-style distributed web scraping framework with Retrieval-Augmented Generation (RAG), built as a monorepo with npm workspaces, Turbo, TypeScript, Express, React, and Prisma.
 
+Developed in a private repository during the Onramp program; history not carried over when made public. Built in one week after the RAG session.
+
 ## Demo Video
 
 [▶ Watch the demo video](https://drive.google.com/file/d/1xfSelmzps7Dwj-LTeYcdHl72zdbTp43L/view?usp=sharing)
@@ -9,7 +11,6 @@ A production-style distributed web scraping framework with Retrieval-Augmented G
 ## Tech Stack
 
 | Category | Technology |
-|---|---|---|
 | Runtime | Node.js 22, TypeScript 6 |
 | Backend | Express 5 |
 | Frontend | React 19, Vite 8 |
@@ -137,7 +138,7 @@ docker-compose down -v
 | `npm run build` | Build all workspaces |
 | `npm run lint` | Type-check all workspaces |
 | `npm run type-check` | Type-check all workspaces (alias for lint) |
-| `npm run test` | Run all workspace tests (~185 unit tests — 115 scraper + 18 queue + 46 rag + 6 vector) |
+| `npm run test` | Run all workspace tests (~180 tests — 140 scraper + 18 queue + 19 rag + 3 vector) |
 | `npm run test:scraper` | Run scraper tests only (cd packages/scraper && npx vitest run) |
 | `npm run test:queue` | Run queue tests only (cd packages/queue && npx vitest run) |
 | `npm run test:rag` | Run RAG tests only (cd packages/rag && npx vitest run) |
